@@ -1,6 +1,5 @@
 Un exemple complet d'un traitement Spring Batch avec :
 ✅ Step : Gestion des étapes
-✅ Tasklet : Tâche simple
 ✅ ItemReader : Lecture des données
 ✅ ItemProcessor : Transformation des données
 ✅ ItemWriter : Écriture des résultats
@@ -9,22 +8,42 @@ Un exemple complet d'un traitement Spring Batch avec :
 
 Lire des produits depuis un fichier CSV, les filtrer en fonction du prix, puis écrire les produits valides dans une base de données H2.
 
+##Fonctionnement du projet
+
+    #Lecture des données :
+Le fichier products.csv est lu via un FlatFileItemReader, qui extrait les colonnes id, name, et price.
+
+    #Traitement des données :
+Le ProductProcessor applique une logique de filtrage : seuls les produits dont le prix est supérieur à 50 sont retenus. En plus, une augmentation de 20% est appliquée sur leur prix.
+
+    #Écriture en base de données :
+Les produits traités sont insérés dans une base de données H2 via un JdbcBatchItemWriter. Une instruction SQL est utilisée pour insérer les produits dans la table product.
+
+    #Exécution du Job :
+Le job est lancé via la configuration Spring Batch, où les étapes sont définies. Le job est exécuté avec la gestion des transactions pour garantir que l'opération est atomique.
+
+Ce projet implémente un batch de manière simple avec Spring Batch. Il utilise des composants standards comme ItemReader, ItemProcessor, et ItemWriter pour lire, traiter et écrire les données.
+
 📂 1️⃣ Structure du projet
 
-src/main/java/com/example/batch
-│── config/
-│   ├── BatchConfig.java         # Configuration du batch
-│   ├── CsvReaderConfig.java     # Configuration du lecteur CSV
-│   ├── ProductTasklet.java      # Tasklet
-│── model/
-│   ├── Product.java             # Entité JPA
-│── processor/
-│   ├── ProductProcessor.java    # Transformation des données
-│── repository/
-│   ├── ProductRepository.java   # Accès base de données
-│── writer/
-│   ├── DatabaseWriter.java      # Écriture en base de données
-│── SpringBatchApplication.java  # Classe principale
+└── src/
+    ├── main/
+        ├── java/
+            └── com/example/springbatch/
+                ├── SpringBatchApplication.java
+                ├── config/
+                │   ├── BatchConfig.java
+                │   └── CsvReaderConfig.java
+                ├── model/
+                │   └── Product.java
+                ├── processor/
+                │   └── ProductProcessor.java
+                ├── repository/
+                │   └── ProductRepository.java
+                ├── writer/
+                │   └── DatabaseWriter.java
+                └── resources/
+                    └── products.csv
 
 📝 2️⃣ Dépendances pom.xml
 
