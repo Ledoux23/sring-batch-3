@@ -11,3 +11,25 @@ public class SpringBatch3Application {
 	}
 
 }
+/*
+ * Structure du projet
+ * 
+└── src/
+    ├── main/
+        ├── java/
+            └── com/example/springbatch/
+                ├── SpringBatchApplication.java
+                ├── config/
+                │   ├── BatchConfig.java
+                │   └── CsvReaderConfig.java
+                ├── model/
+                │   └── Product.java
+                ├── processor/
+                │   └── ProductProcessor.java
+                ├── repository/
+                │   └── ProductRepository.java
+                ├── writer/
+                │   └── DatabaseWriter.java
+                └── resources/
+                    └── products.csv
+*/
